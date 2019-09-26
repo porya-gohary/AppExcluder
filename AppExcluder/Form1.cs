@@ -175,7 +175,7 @@ namespace AppExcluder
 
         private void label3_Click(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
