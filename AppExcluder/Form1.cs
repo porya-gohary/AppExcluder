@@ -65,6 +65,19 @@ namespace AppExcluder
         private void button1_Click(object sender, EventArgs e)
         {
             //String command = "\"C:\\Program Files\\Mozilla Firefox\\firefox.exe\"";
+            if (Selected_Adapter == null)
+            {
+                MessageBox.Show("Please Select A Network Adapter.", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (label2.Text == "Not Selected!")
+            {
+                MessageBox.Show("Please Select A Application.", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             String command = "\""+AppDomain.CurrentDomain.BaseDirectory+"ForceBindIP\\ForceBindIP64.exe"+"\""+" -i "+getIP(Selected_Adapter)+" "+"\""+
                 label2.Text+"\"";
             Console.WriteLine(command);
