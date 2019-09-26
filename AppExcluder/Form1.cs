@@ -17,6 +17,7 @@ namespace AppExcluder
     {
         private String Selected_Adapter;
         List<String> Adapters = new List<String>();
+        string path;
 
         //Start CMD Window Hidden
         Process cmd = new Process();
@@ -25,6 +26,7 @@ namespace AppExcluder
         public Form1()
         {
             InitializeComponent();
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             Adapters = net_adapters();
             for (int i = 0; i < Adapters.Count; i++)
             {
@@ -62,7 +64,10 @@ namespace AppExcluder
 
         private void button1_Click(object sender, EventArgs e)
         {
-            String command = "\"C:\\Program Files\\Mozilla Firefox\\firefox.exe\"";
+            //String command = "\"C:\\Program Files\\Mozilla Firefox\\firefox.exe\"";
+            String command = "\""+AppDomain.CurrentDomain.BaseDirectory+"ForceBindIP\\ForceBindIP64.exe"+"\""+" -i "+getIP(Selected_Adapter)+" "+"\""+
+                label2.Text+"\"";
+            Console.WriteLine(command);
 
             try
             {
@@ -88,7 +93,7 @@ namespace AppExcluder
             String IP = null;
             foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
             {
-                Console.Write(nic.Name+"\n");
+                //Console.Write(nic.Name+"\n");
                 if (nic.Name.ToString().Equals(name))
                 {
                     foreach (UnicastIPAddressInformation ip in nic.GetIPProperties().UnicastAddresses)
@@ -96,6 +101,7 @@ namespace AppExcluder
                         if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                         {
                             Console.WriteLine(ip.Address.ToString());
+                            IP = ip.Address.ToString();
                             return IP;
                         }
                     }
@@ -109,27 +115,49 @@ namespace AppExcluder
 
         public void ExecuteCommandSync(object command)
         {
-            // create the ProcessStartInfo using "cmd" as the program to be run,
-            // and "/c " as the parameters.
-            // Incidentally, /c tells cmd that we want it to execute the command that follows,
-            // and then exit.
-            System.Diagnostics.ProcessStartInfo procStartInfo =
-                new System.Diagnostics.ProcessStartInfo("cmd", "/c " + command);
+          
+            Process cmd = new Process();
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.RedirectStandardInput = true;
+            cmd.StartInfo.RedirectStandardOutput = true;
+            cmd.StartInfo.CreateNoWindow = true;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+            cmd.StandardInput.WriteLine(command+"");
+            cmd.StandardInput.Flush();
+            cmd.StandardInput.Close();
+            cmd.WaitForExit();
+            Console.WriteLine(cmd.StandardOutput.ReadToEnd());
+//            System.Diagnostics.ProcessStartInfo procStartInfo =
+//                new System.Diagnostics.ProcessStartInfo("cmd",  command+"");
+//            procStartInfo.RedirectStandardOutput = true;
+//            procStartInfo.UseShellExecute = false;
+//            
+//            procStartInfo.CreateNoWindow = true;
+//           
+//            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+//            proc.StartInfo = procStartInfo;
+//            proc.Start();
+//           
+//            string result = proc.StandardOutput.ReadToEnd();
+//            
+//            Console.WriteLine(result);
+        }
 
-            // The following commands are needed to redirect the standard output.
-            // This means that it will be redirected to the Process.StandardOutput StreamReader.
-            procStartInfo.RedirectStandardOutput = true;
-            procStartInfo.UseShellExecute = false;
-            // Do not create the black window.
-            procStartInfo.CreateNoWindow = true;
-            // Now we create a process, assign its ProcessStartInfo and start it
-            System.Diagnostics.Process proc = new System.Diagnostics.Process();
-            proc.StartInfo = procStartInfo;
-            proc.Start();
-            // Get the output into a string
-            string result = proc.StandardOutput.ReadToEnd();
-            // Display the command output.
-            Console.WriteLine(result);
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Applications (*.exe)|*.exe";
+            dialog.Title = "Please select an Application.";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                path = dialog.FileName;
+            }
+
+            label2.Text = path;
+            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
+            //throw new System.NotImplementedException();
         }
     }
 }
