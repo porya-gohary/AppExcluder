@@ -188,20 +188,32 @@ namespace AppExcluder
         public void CreateShortcut(string shortcutName, string shortcutPath, string targetFileLocation)
         {
             string shortcutLocation = System.IO.Path.Combine(shortcutPath, shortcutName + ".lnk");
-            
+//            string run_shortcut = "\""+AppDomain.CurrentDomain.BaseDirectory + "IP_Finder.exe\" \"" + Selected_Adapter +"\" \""
+//                                  +AppDomain.CurrentDomain.BaseDirectory+"ForceBindIP\\ForceBindIP64.exe"+"\" "+"\""+
+//                                  label2.Text+"\"" ;
+            string run_shortcut = AppDomain.CurrentDomain.BaseDirectory + "IP_Finder.exe";
+            Console.WriteLine(run_shortcut);
             WshShell shell = new WshShell();
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutLocation);
  
             shortcut.Description = "My shortcut description";   // The description of the shortcut
-            //shortcut.IconLocation = @"c:\myicon.ico";           // The icon of the shortcut
-            shortcut.TargetPath = targetFileLocation;                 // The path of the file that will launch when the shortcut is run
+            shortcut.IconLocation = targetFileLocation;           // The icon of the shortcut
+            shortcut.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            shortcut.Arguments = "\"" + Selected_Adapter +"\" \""
+                                  +AppDomain.CurrentDomain.BaseDirectory+"ForceBindIP\\ForceBindIP64.exe"+"\" "+"\""+
+                                  label2.Text+"\"" ;
+            shortcut.TargetPath = run_shortcut;                 // The path of the file that will launch when the shortcut is run
             shortcut.Save();                                    // Save the shortcut
+            
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Applications (*.exe)|*.exe";
+            saveFileDialog.FileName = Path.GetFileNameWithoutExtension(label2.Text);
+            saveFileDialog.Title = "Choose a place for Shortcut.";
             saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             if (saveFileDialog.ShowDialog()==DialogResult.OK)
             {
