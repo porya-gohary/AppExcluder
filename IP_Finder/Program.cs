@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Runtime;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Xml;
 
@@ -11,10 +12,15 @@ namespace IP_Finder
     {
         public static void Main(string[] args)
         {
+            const int SW_HIDE = 0;
+            const int SW_SHOW = 5;
             String Selected_adapter;
             String Program_Address;
             String ForceIP_Address;
             String IP;
+            
+            var handle = GetConsoleWindow();
+            ShowWindow(handle, SW_HIDE);
             Selected_adapter = args[0];
             //Console.WriteLine(Selected_adapter);
             ForceIP_Address = args[1];
@@ -35,8 +41,6 @@ namespace IP_Finder
             //Start the thread.
             objThread.Start(command);
             System.Threading.Thread.Sleep(5000);
-            
-          
         }
 
         public static String getIP(String name)
@@ -80,5 +84,12 @@ namespace IP_Finder
             cmd.WaitForExit();
             Console.WriteLine(cmd.StandardOutput.ReadToEnd());
         }
+
+        [DllImport("kernel32.dll")]
+        static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        
     }
 }

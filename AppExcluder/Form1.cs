@@ -4,12 +4,14 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IWshRuntimeLibrary;
 
 namespace AppExcluder
 {
@@ -181,6 +183,34 @@ namespace AppExcluder
         private void groupBox1_Enter(object sender, EventArgs e)
         {
            // throw new System.NotImplementedException();
+        }
+        
+        public void CreateShortcut(string shortcutName, string shortcutPath, string targetFileLocation)
+        {
+            string shortcutLocation = System.IO.Path.Combine(shortcutPath, shortcutName + ".lnk");
+            
+            WshShell shell = new WshShell();
+            IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutLocation);
+ 
+            shortcut.Description = "My shortcut description";   // The description of the shortcut
+            //shortcut.IconLocation = @"c:\myicon.ico";           // The icon of the shortcut
+            shortcut.TargetPath = targetFileLocation;                 // The path of the file that will launch when the shortcut is run
+            shortcut.Save();                                    // Save the shortcut
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Applications (*.exe)|*.exe";
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            if (saveFileDialog.ShowDialog()==DialogResult.OK)
+            {
+                
+                
+
+                CreateShortcut(Path.GetFileNameWithoutExtension(saveFileDialog.FileName), Path.GetDirectoryName(saveFileDialog.FileName),label2.Text);
+            }
+            //throw new System.NotImplementedException();
         }
     }
 }
