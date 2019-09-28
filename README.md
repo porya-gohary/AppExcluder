@@ -1,38 +1,30 @@
 <h1 align="center"> AppExcluder </h1> <br>
 
 this App very useful for make Exception for a appliction that use a specific Network Adapter.
-it can use for direct connect (without VPN) to a network adapter.
+it can used for direct connect (without VPN) to a network adapter.
 * [This Program Use ForceBindIP As a Core](https://r1ch.net/projects/forcebindip)
+
+<p align="center">
+  <img alt="AppExcluder" title="AppExcluder" src="https://github.com/porya-gohary/AppExcluder/blob/master/AppExcluder.png" >
+</p>
+
+NOTICE: THIS PROGRAM IS UNDER DEVELOPMENT...
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 
-What things you need to install the software and how to install them
+For Using this Program your system required the following packages:
 
-```
-Give examples
-```
+* [.NET Framework 4.6](https://www.microsoft.com/en-gb/download/details.aspx?id=48130)
+* [Visual Studio 2015 Runtimes (x86 and x64)](https://www.microsoft.com/en-us/download/details.aspx?id=52685)
+
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+First Download Application From link below and then extract it somewhere.
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+* [AppExcluder-Ver1.0](https://porya-gohary.ir/AppExcluder-v1.0.zip)
 
 ## Running the tests
 
@@ -72,15 +64,10 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Apache License 2.0 - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
