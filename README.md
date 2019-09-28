@@ -26,52 +26,37 @@ First Download Application From link below and then extract it somewhere.
 
 * [AppExcluder-Ver1.0](https://porya-gohary.ir/AppExcluder-v1.0.zip)
 
-## Running the tests
+## Running
 
-Explain how to run the automated tests for this system
+For running program run "AppExcluder.exe" and then select one of your Network Adapter that you want used for routing. now select your application from "Select Application" Button. then you can use "RUN!" Button for run it and "Make Shortcut" For making a fast shortcut.
 
-### Break down into end to end tests
+### NOTICE!
+the following part adapted from [ForceBindIP](https://r1ch.net/projects/forcebindip)
 
-Explain what these tests test and why
-
+#### Google Chrome Compatibility
+Chrome requires additional configuration to run under ForceBindIP. This is because Chrome 72 or later blocks 3rd party programs from injecting DLLs. To allow ForceBindIP to work, install this [enterprise policy registry file](https://r1ch.net/assets/forcebindip/Chrome72.reg) to re-enable DLL injection, then open Chrome and go to
 ```
-Give an example
+chrome://flags/#network-service-in-process
 ```
-
-### And coding style tests
-
-Explain what these tests test and why
-
+and enable the setting (Chrome 76+) or
 ```
-Give an example
+chrome://flags#network-service
 ```
+and disable the setting (Chrome 75-).
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
+##### Firefox Compatibility
+Firefox requires the
+```
+about:config?filter=browser.launcherProcess.enabled
+```
+preference set to false, otherwise ForceBindIP attaches to the launcher and not the actual program.
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* C#
+* C++
 
 
 ## License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-
